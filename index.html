@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKSA's Advance RoadMap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a; --card-bg: #1e293b; --text-primary: #f8fafc;
+            --text-secondary: #94a3b8; --accent-blue: #38bdf8;
+            --accent-purple: #c084fc; --accent-green: #4ade80;
+            --border: #334155; --resource-bg: #0b1120;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg); background-image: radial-gradient(circle at center, #444444, #1d1e22 80%, #1d1e22 100%); color: var(--text-primary); padding-bottom: 60px; min-height: 100vh; position: relative; }
+
+        /* --- LOGIN & PRANK STYLES --- */
+        #loginOverlay, #prankOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        #prankOverlay { z-index: 10000; display: none; background: rgba(0,0,0,0.95); }
+
+        .login-box { background: var(--card-bg); padding: 2.5rem; border-radius: 15px; border: 1px solid var(--border); width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+        
+        /* Shake Animation for Prank */
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-10px); } 50% { transform: translateX(10px); } 75% { transform: translateX(-10px); } 100% { transform: translateX(0); } }
+        .shake-it { animation: shake 0.3s ease-in-out; }
+
+        .login-input { width: 100%; padding: 12px; margin: 10px 0; background: #0f172a; border: 1px solid var(--border); color: white; border-radius: 6px; font-size: 1rem; }
+        .login-btn { width: 100%; padding: 12px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); border: none; color: white; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 10px; }
+        
+        /* The Prank Link */
+        .prank-link { color: var(--text-secondary); font-size: 0.85rem; margin-top: 15px; cursor: pointer; text-decoration: underline; transition: 0.3s; display: inline-block; }
+        .prank-link:hover { color: var(--accent-purple); }
+
+        /* Prank Modal Content */
+        .prank-content { text-align: center; max-width: 90%; }
+        .prank-content img { max-width: 300px; border-radius: 10px; border: 3px solid #ef4444; margin-bottom: 20px; }
+        .prank-text { font-size: 1.5rem; font-weight: bold; color: #ef4444; text-transform: uppercase; line-height: 1.4; margin-bottom: 20px; text-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+        .close-prank-btn { background: white; color: black; border: none; padding: 10px 20px; font-weight: bold; border-radius: 30px; cursor: pointer; }
+
+/* --- FOOTER --- */
+        footer { 
+            position: absolute; 
+            bottom: 0; 
+            width: 100%; 
+            height: 60px; /* Slightly taller for breathing room */
+            /* background: #0f172a; */
+             /* Matches page background */
+            /* border-top: 1px solid var(--border); Removed to match screenshot clean look */
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 0.9rem; 
+            color: #ffffff; /* Pure white text */
+            letter-spacing: 0.5px;
+        }
+
+        /* The Red PKSA Style */
+        .footer-highlight {
+            color: #38bdf8; /* Vibrant Red */
+            font-weight: bold;
+            margin-left: 4px;
+        }
+        /* (Keeping your original CSS below for the roadmap) */
+ header { 
+            position: sticky; 
+            top: 0; 
+            background: rgba(40, 46, 60, 0.6); /* More transparent */
+            backdrop-filter: blur(12px); /* Blur effect */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 1rem 2rem; 
+            z-index: 1000; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }        
+        .logo { font-size: 1.5rem; font-weight: 800; } .logo span { color: var(--accent-blue); }
+        .user-badge { background: #334155; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+        .progress-wrapper { width: 30%; max-width: 300px; }
+        .progress-bar-bg { background: var(--border); height: 10px; border-radius: 20px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); width: 0%; transition: width 0.5s ease; }
+        
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .phase-header { margin: 3rem 0 1.5rem; padding-bottom: 10px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
+        .phase-1 h2 { color: var(--accent-blue); } .phase-2 h2 { color: var(--accent-purple); } .phase-3 h2 { color: var(--accent-green); }
+        .week-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; transition: 0.3s; }
+        .week-card.active { border-color: var(--accent-blue); box-shadow: 0 0 15px rgba(56, 189, 248, 0.1); }
+        .week-header { padding: 1.2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); }
+        .week-content { display: none; padding: 0 1.2rem 1.2rem; border-top: 1px solid var(--border); }
+        .week-card.active .week-content { display: block; }
+        .day-item { padding: 15px 0; border-bottom: 1px dashed #334155; display: flex; flex-direction: column; gap: 10px; }
+        .task-row { display: flex; align-items: center; gap: 15px; width: 100%; }
+        .custom-checkbox { appearance: none; width: 22px; height: 22px; border: 2px solid var(--text-secondary); border-radius: 6px; cursor: pointer; flex-shrink: 0; }
+        .custom-checkbox:checked { background: var(--accent-green); border-color: var(--accent-green); position: relative; }
+        .custom-checkbox:checked::after { content: '✔'; position: absolute; color: #0f172a; font-size: 14px; left: 4px; top: -1px; font-weight: bold; }
+        .task-content { flex-grow: 1; }
+        .day-label { font-size: 0.8rem; font-weight: bold; color: var(--accent-blue); display: block; margin-bottom: 4px; }
+        .task-text { color: var(--text-primary); font-size: 1rem; }
+        .custom-checkbox:checked ~ .task-content .task-text { text-decoration: line-through; color: var(--text-secondary); }
+        .study-btn { background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .study-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(56, 189, 248, 0.1); }
+        .resource-panel { background: var(--resource-bg); padding: 15px; border-radius: 8px; margin-left: 37px; display: none; border-left: 3px solid var(--accent-blue); margin-top: 5px; }
+        .resource-panel.show { display: block; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .topic-block { margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 8px; }
+        .topic-block:last-child { margin-bottom: 0; border-bottom: none; }
+        .topic-title { font-size: 0.85rem; font-weight: bold; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .res-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+        .res-link { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; text-decoration: none; color: white; transition: 0.2s; font-weight: 500; }
+        .res-link:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .res-text { background: #15803d; } .res-yt { background: #b91c1c; } .res-ai { background: #7e22ce; cursor: pointer; }
+        #adminPanel { position: fixed; bottom: 70px; right: 20px; display: none; }
+        .admin-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .sync-status { position: fixed; bottom: 70px; left: 20px; font-size: 0.85rem; color: var(--text-secondary); background: rgba(15, 23, 42, 0.9); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+
+        @media(max-width: 600px) { .progress-wrapper { display: none; } }
+    </style>
+</head>
+<body>
+
+<div id="loginOverlay">
+    <div class="login-box" id="loginBox">
+        <h2 style="margin-bottom:10px; color:white;">🚀 PKSA HUB <span style="color:var(--accent-blue)">Login</span></h2>
+        <p style="color:var(--text-secondary); margin-bottom:20px;">Enter credentials to sync progress</p>
+        
+        <input type="text" id="usernameInput" class="login-input" placeholder="Username">
+        <input type="password" id="passwordInput" class="login-input" placeholder="Password">
+        
+        <button class="login-btn" onclick="handleLogin()">Start Coding</button>
+        <div id="loginError" style="color:#ef4444; margin-top:10px; display:none;">Invalid credentials</div>
+
+       <p id="prankLink" class="prank-link" onclick="triggerPrank()" style="display: none;">
+    Forgot Password? Click to Reset
+</p>
+    </div>
+</div>
+
+<div id="prankOverlay">
+    <div class="prank-content">
+<div class="tenor-gif-embed" data-postid="25271054" data-share-method="host" data-aspect-ratio="0.984375" data-width="100%"><a href="https://tenor.com/view/ashneer-grover-ashish-chanchlani-shark-tank-chal-chal-nikal-gif-25271054">Ashneer Grover Ashish Chanchlani GIF</a>from <a href="https://tenor.com/search/ashneer+grover-gifs">Ashneer Grover GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>        
+<div class="prank-text">
+            Aye bade password badalne...<br>
+            Beth Gapchup
+            Yehi rahega! Samjha! 🤣
+        </div>
+        <button class="close-prank-btn" onclick="closePrank()">Okay, Sorry! 😭</button>
+    </div>
+</div>
+
+<header>
+    <div class="logo"><i class="fas fa-code"></i> PKSA ROADMAP<span> - A step towards placements🙂👍</span></div>
+    
+    <div class="progress-wrapper">
+        <div class="progress-bar-bg"><div class="progress-fill" id="progressBar"></div></div>
+        <div style="display:flex; justify-content:space-between; margin-top:5px;">
+            <span class="stats" id="progressText">0%</span>
+            <div class="user-badge" id="userBadge"><i class="fas fa-user"></i> Guest</div>
+        </div>
+    </div>
+</header>
+
+<div class="container" id="roadmap-container"></div>
+
+<div class="sync-status" id="syncStatus">
+    <i class="fas fa-circle" style="color:#ef4444"></i> Offline
+</div>
+
+<div id="adminPanel">
+    <button class="admin-btn" onclick="toggleSpectator()">
+        <i class="fas fa-eye"></i> <span id="spectatorText">View Friend's Progress</span>
+    </button>
+</div>
+
+<footer>
+    &copy; 2025 All Rights Reserved to <span class="footer-highlight">PKSA</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
