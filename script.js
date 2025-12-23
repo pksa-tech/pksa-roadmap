@@ -528,3 +528,26 @@ document
       link.style.display = "none";
     }
   });
+
+// ==========================================
+// 🔗 AUTO-FILL LOGIC (From Verification Page)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Get the 'user' from the URL (e.g. ?user=yugs)
+    const urlParams = new URLSearchParams(window.location.search);
+    const autoUser = urlParams.get('user');
+
+    if (autoUser) {
+        // 2. Fill the Username Input
+        const userField = document.getElementById("usernameInput");
+        const passField = document.getElementById("passwordInput");
+
+        if (userField && passField) {
+            userField.value = autoUser; // Auto-fill 'yugs'
+            
+            // 3. Focus on Password field so she can just hit PASTE
+            passField.focus();
+            passField.placeholder = "Paste Password Here...";
+        }
+    }
+});
