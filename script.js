@@ -14,6 +14,11 @@ const USERS = {
     binId: "6949788bd0ea881f403a0c30",
     role: "user",
   },
+  sujal: {
+    pass: "sujal@123",
+    binId: "695e4e95ae596e708fcb1c2f",
+    role: "user",
+  },
 };
 
 // ==========================================
@@ -551,3 +556,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
