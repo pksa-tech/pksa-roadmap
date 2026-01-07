@@ -535,25 +535,35 @@ document
   });
 
 // ==========================================
-// 🔗 AUTO-FILL LOGIC (From Verification Page)
+// 🔗 AUTO-FILL USER + PASSWORD FROM URL
 // ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Get the 'user' from the URL (e.g. ?user=yugs)
-    const urlParams = new URLSearchParams(window.location.search);
-    const autoUser = urlParams.get('user');
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
 
-    if (autoUser) {
-        // 2. Fill the Username Input
-        const userField = document.getElementById("usernameInput");
-        const passField = document.getElementById("passwordInput");
+  const autoUser = params.get("user");
+  const autoPass = params.get("password");
 
-        if (userField && passField) {
-            userField.value = autoUser; // Auto-fill 'yugs'
-            
-            // 3. Focus on Password field so she can just hit PASTE
-            passField.focus();
-            passField.placeholder = "Paste Password Here...";
-        }
-    }
+  const userField = document.getElementById("usernameInput");
+  const passField = document.getElementById("passwordInput");
+
+  if (autoUser && autoPass && userField && passField) {
+    // 1️⃣ Auto-fill inputs
+    userField.value = autoUser;
+    passField.value = autoPass;
+
+    // 2️⃣ Small delay to ensure UI is ready
+    setTimeout(() => {
+      handleLogin(); // auto-click "Start Coding"
+    }, 300);
+
+    // 3️⃣ OPTIONAL: clean URL (remove password from address bar)
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+  }
 });
+
+
 
